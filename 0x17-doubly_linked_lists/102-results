@@ -1,0 +1,24 @@
+#!/bin/bash
+# initialize the largest palindrome to zero
+largest=0
+# loop through all possible 3-digit numbers
+for i in {100..999}
+do
+    for j in {100..999}
+    do
+        # multiply the numbers and store the product
+        product=$((i * j))
+        # convert the product to a string
+        str_product="$product"
+        # reverse the string using parameter expansion
+        rev_product="${str_product: -1}${str_product: -2:1}${str_product: -3:1}${str_product: -4:1}${str_product: -5:1}${str_product: -6:1}"
+        # check if the product is a palindrome and larger than the current largest
+        if [ "$str_product" == "$rev_product" ] && [ $product -gt $largest ]
+        then
+            # update the largest palindrome
+            largest=$product
+        fi
+    done
+done
+# save the result in the file 102-result
+echo $largest > 102-result
