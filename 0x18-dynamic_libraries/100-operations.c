@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "operators.h"
+
 /**
  * add the two integers
  * @a: first int
