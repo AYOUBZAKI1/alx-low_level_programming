@@ -1,77 +1,36 @@
 #include "hash_tables.h"
 /**
- * hash_table_set - adds an element to the hash table.
- * @h: hash table
- * @k: is the key. key can not be an empty string
- * @v: value associated with the key.
- * value must be duplicated. value can be an empty string
- * Return: 1 on success, 0 on failurre
+ *hash_table_set - adds an element to the hash table
+ *@ht: pointer to the hash
+ *@key: pointer to the key
+ *@value: value to add
+ *Return: 1 if is success or 0
  */
-int hash_table_set(hash_table_t *h, const char *k, const char *v)
+int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
-
-hash_node_t *node;
+unsigned long index, size;
 hash_node_t *new_node;
-unsigned long int index;
 
-if (h == NULL || *k == '\n' || *v == '\n')
-	return (0);
+if (ht  == NULL || key == NULL || value == NULL)
+return (0);
 
-index = key_index((const unsigned char *)k, h->size);
-node = h->array[index];
+size = ht->size;
+index = key_index((const unsigned char *)key, size);
 
-if (node == NULL)
+if (ht->array[index] != NULL && strcmp(ht->array[index]->key, key) == 0)
 {
-	new_node = create_new_node(k, v);
-	if (new_node == NULL)
-		return (0);
-
-	h->array[index] = new_node;
-	return (1);
-}
-
-/*If key exists, replace value*/
-while (node != NULL)
-{
-	if (strcmp(k, node->key) == 0)
-	{
-		free(node->value);
-		node->value = strdup(v);
-		return (1);
-	}
-	node = node->next;
-}
-/*If key doesn't exist, create new node*/
-new_node = create_new_node(k, v);
-if (new_node == NULL)
-	return (0);
-
-new_node->next = h->array[index];
-h->array[index] = new_node;
+ht->array[index]->value = strdup(value);
 return (1);
 }
 
-/**
- * create_new_node - create a new node
- * @k: is the key. key can not be an empty string
- * @v: value associated with the key.
- * v must be duplicated. value can be an empty string
- * Return: 1 on success, 0 on failurre
- */
+new_node = malloc(sizeof(hash_node_t));
 
-hash_node_t *create_new_node (const char *k, const char *v)
-{
-	hash_node_t *new_node;
+if (new_node == NULL)
+return (0);
 
-	new_node = malloc(sizeof(hash_node_t));
-
-	if (new_node == NULL)
-		return (NULL);
-
-	new_node->key = strdup(k);
-	new_node->value = strdup(v);
-	new_node->next = NULL;
-
-	return (new_node);
+new_node->key = strdup(key);
+new_node->value = strdup(value);
+new_node->next = ht->array[index];
+ht->array[index] = new_node;
+return (1);
 }
-
