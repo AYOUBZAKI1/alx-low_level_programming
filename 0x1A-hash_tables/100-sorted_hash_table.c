@@ -1,1 +1,292 @@
-{"payload":{"allShortcutsEnabled":false,"fileTree":{"0x1A-hash_tables":{"items":[{"name":".gitignore","path":"0x1A-hash_tables/.gitignore","contentType":"file"},{"name":"0-hash_table_create.c","path":"0x1A-hash_tables/0-hash_table_create.c","contentType":"file"},{"name":"1-djb2.c","path":"0x1A-hash_tables/1-djb2.c","contentType":"file"},{"name":"100-sorted_hash_table.c","path":"0x1A-hash_tables/100-sorted_hash_table.c","contentType":"file"},{"name":"2-key_index.c","path":"0x1A-hash_tables/2-key_index.c","contentType":"file"},{"name":"3-hash_table_set.c","path":"0x1A-hash_tables/3-hash_table_set.c","contentType":"file"},{"name":"4-hash_table_get.c","path":"0x1A-hash_tables/4-hash_table_get.c","contentType":"file"},{"name":"5-hash_table_print.c","path":"0x1A-hash_tables/5-hash_table_print.c","contentType":"file"},{"name":"6-hash_table_delete.c","path":"0x1A-hash_tables/6-hash_table_delete.c","contentType":"file"},{"name":"README.md","path":"0x1A-hash_tables/README.md","contentType":"file"},{"name":"d","path":"0x1A-hash_tables/d","contentType":"file"},{"name":"hash_tables.h","path":"0x1A-hash_tables/hash_tables.h","contentType":"file"},{"name":"sht","path":"0x1A-hash_tables/sht","contentType":"file"}],"totalCount":13},"":{"items":[{"name":"0x00-hello_world","path":"0x00-hello_world","contentType":"directory"},{"name":"0x01-variables_if_else_while","path":"0x01-variables_if_else_while","contentType":"directory"},{"name":"0x02-functions_nested_loops","path":"0x02-functions_nested_loops","contentType":"directory"},{"name":"0x03-debugging","path":"0x03-debugging","contentType":"directory"},{"name":"0x04-more_functions_nested_loops","path":"0x04-more_functions_nested_loops","contentType":"directory"},{"name":"0x05-pointers_arrays_strings","path":"0x05-pointers_arrays_strings","contentType":"directory"},{"name":"0x06-pointers_arrays_strings","path":"0x06-pointers_arrays_strings","contentType":"directory"},{"name":"0x07-pointers_arrays_strings","path":"0x07-pointers_arrays_strings","contentType":"directory"},{"name":"0x08-recursion","path":"0x08-recursion","contentType":"directory"},{"name":"0x09-static_libraries","path":"0x09-static_libraries","contentType":"directory"},{"name":"0x0A-argc_argv","path":"0x0A-argc_argv","contentType":"directory"},{"name":"0x0B-malloc_free","path":"0x0B-malloc_free","contentType":"directory"},{"name":"0x0C-more_malloc_free","path":"0x0C-more_malloc_free","contentType":"directory"},{"name":"0x0D-preprocessor","path":"0x0D-preprocessor","contentType":"directory"},{"name":"0x0E-structures_typedef","path":"0x0E-structures_typedef","contentType":"directory"},{"name":"0x0F-function_pointers","path":"0x0F-function_pointers","contentType":"directory"},{"name":"0x10-variadic_functions","path":"0x10-variadic_functions","contentType":"directory"},{"name":"0x12-singly_linked_lists","path":"0x12-singly_linked_lists","contentType":"directory"},{"name":"0x13-more_singly_linked_lists","path":"0x13-more_singly_linked_lists","contentType":"directory"},{"name":"0x14-bit_manipulation","path":"0x14-bit_manipulation","contentType":"directory"},{"name":"0x15-file_io","path":"0x15-file_io","contentType":"directory"},{"name":"0x17-doubly_linked_lists","path":"0x17-doubly_linked_lists","contentType":"directory"},{"name":"0x18-dynamic_libraries","path":"0x18-dynamic_libraries","contentType":"directory"},{"name":"0x1A-hash_tables","path":"0x1A-hash_tables","contentType":"directory"},{"name":"README.md","path":"README.md","contentType":"file"}],"totalCount":25}},"fileTreeProcessingTime":9.01123,"foldersToFetch":[],"reducedMotionEnabled":null,"repo":{"id":602626757,"defaultBranch":"main","name":"alx-low_level_programming","ownerLogin":"hamzahdili2001","currentUserCanPush":false,"isFork":false,"isEmpty":false,"createdAt":"2023-02-16T15:57:19.000Z","ownerAvatar":"https://avatars.githubusercontent.com/u/61630679?v=4","public":true,"private":false,"isOrgOwned":false},"symbolsExpanded":false,"treeExpanded":true,"refInfo":{"name":"main","listCacheKey":"v0:1676563248.540381","canEdit":false,"refType":"branch","currentOid":"f8250dfa3141b10609fc9f4ffcc2b37932520e00"},"path":"0x1A-hash_tables/100-sorted_hash_table.c","currentUser":null,"blob":{"rawLines":["#include \"hash_tables.h\"","#include <string.h>","","/**"," * shash_table_create - Create a sorted hash table"," * @size: The size of the hash table"," *"," * Return: A pointer to the created hash table, or NULL on failure"," */","shash_table_t *shash_table_create(unsigned long int size)","{","\tshash_table_t *ht;","\tunsigned long int i;","","\tht = malloc(sizeof(shash_table_t));","\tif (ht == NULL)","\t\treturn (NULL);","","\tht->size = size;","\tht->array = malloc(sizeof(shash_node_t *) * size);","\tif (ht->array == NULL)","\t{","\t\tfree(ht);","\t\treturn (NULL);","\t}","","\tfor (i = 0; i < size; i++)","\t\tht->array[i] = NULL;","","\tht->shead = NULL;","\tht->stail = NULL;","","\treturn (ht);","}","","/**"," * create_node - Create a new sorted hash table node"," * @key: The key of the node"," * @value: The value of the node"," *"," * Return: A pointer to the created node, or NULL on failure"," */","shash_node_t *create_node(const char *key, const char *value)","{","\tshash_node_t *node;","","\tnode = malloc(sizeof(shash_node_t));","\tif (node == NULL)","\t\treturn (NULL);","","\tnode->key = strdup(key);","\tif (node->key == NULL)","\t{","\t\tfree(node);","\t\treturn (NULL);","\t}","","\tnode->value = strdup(value);","\tif (node->value == NULL)","\t{","\t\tfree(node->key);","\t\tfree(node);","\t\treturn (NULL);","\t}","","\tnode->next = NULL;","\tnode->sprev = NULL;","\tnode->snext = NULL;","","\treturn (NULL);","}","","/**"," * add_n_shash - adds a node at the beginning of a shash at a given index"," *"," * @h: head of the shash linked list"," * @key: key of the shash"," * @value: value to store"," * Return: created node"," */","shash_node_t *add_n_shash(shash_node_t **h, const char *key, const char *value)","{","\tshash_node_t *tmp;","","\ttmp = *h;","","\twhile (tmp != NULL)","\t{","\t\tif (strcmp(key, tmp->key) == 0)","\t\t{","\t\t\tfree(tmp->value);","\t\t\ttmp->value = strdup(value);","\t\t\treturn (tmp);","\t\t}","\t\ttmp = tmp->next;","\t}","","\ttmp = malloc(sizeof(shash_node_t));","","\tif (tmp == NULL)","\t\treturn (NULL);","","\ttmp->key = strdup(key);","\ttmp->value = strdup(value);","\ttmp->next = *h;","","\t*h = tmp;","","\treturn (tmp);","}","","/**"," * add_i_shash - adds a node on the DLL of the shash table"," *"," * @ht: pointer to the table"," * @new: new node to add"," * Return: no return"," */","void add_i_shash(shash_table_t *ht, shash_node_t *new)","{","\tshash_node_t *tmp1, *tmp2;","\tint ret;","","\ttmp1 = tmp2 = ht->shead;","","\twhile (tmp1 != NULL)","\t{","\t\tret = strcmp(new->key, tmp1->key);","\t\tif (ret == 0)","\t\t{","\t\t\treturn;","\t\t}","\t\telse if (ret < 0)","\t\t{","\t\t\tnew->sprev = tmp1->sprev;","","\t\t\tif (tmp1->sprev)","\t\t\t\ttmp1->sprev->snext = new;","\t\t\telse","\t\t\t\tht->shead = new;","","\t\t\ttmp1->sprev = new;","\t\t\tnew->snext = tmp1;","","\t\t\treturn;","\t\t}","\t\ttmp2 = tmp1;","\t\ttmp1 = tmp1->snext;","\t}","","\tnew->sprev = tmp2;","\tnew->snext = NULL;","","\tif (ht->shead)","\t\ttmp2->snext = new;","\telse","\t\tht->shead = new;","","\tht->stail = new;","}","","/**"," * shash_table_set - adds a hash (key, value) to a given shash table"," *"," * @ht: pointer to the shash table"," * @key: key of the shash"," * @value: value to store"," * Return: 1 if successes, 0 if fails"," */","int shash_table_set(shash_table_t *ht, const char *key, const char *value)","{","\tunsigned long int k_index;","\tshash_node_t *new;","","\tif (ht == NULL)","\t\treturn (0);","","\tif (key == NULL || *key == '\\0')","\t\treturn (0);","","\tk_index = key_index((unsigned char *)key, ht->size);","","\tnew = add_n_shash(&(ht->array[k_index]), key, value);","","\tif (new == NULL)","\t\treturn (0);","","\tadd_i_shash(ht, new);","","\treturn (1);","}","","/**"," * shash_table_get - Retrieve the value associated with a key"," * @ht: The hash table"," * @key: The key to search"," *"," * Return: The value associated with the key, or NULL if key not found"," */","char *shash_table_get(const shash_table_t *ht, const char *key)","{","\tshash_node_t *node;","\tunsigned long int index;","","\tif (ht == NULL || key == NULL)","\t\treturn (NULL);","","\tindex = key_index((const unsigned char *)key, ht->size);","\tnode = ht->array[index];","","\twhile (node != NULL && strcmp(node->key, key) != 0)","\t\tnode = node->next;","","\treturn ((node != NULL) ? node->value : NULL);","}","","/**"," * shash_table_print - Print the sorted hash table"," * @ht: The hash table"," */","void shash_table_print(const shash_table_t *ht)","{","\tshash_node_t *node;","","\tif (ht == NULL)","\t\treturn;","","\tnode = ht->shead;","","\tprintf(\"{\");","\twhile (node != NULL)","\t{","\t\tprintf(\"'%s': '%s'\", node->key, node->value);","\t\tif (node->snext != NULL)","\t\t\tprintf(\", \");","\t\tnode = node->snext;","\t}","\tprintf(\"}\\n\");","}","","/**"," * shash_table_print_rev - Print the sorted hash table in reverse order"," * @ht: The hash table"," */","void shash_table_print_rev(const shash_table_t *ht)","{","\tshash_node_t *node;","","\tif (ht == NULL)","\t\treturn;","","\tnode = ht->stail;","","\tprintf(\"{\");","\twhile (node != NULL)","\t{","\t\tprintf(\"'%s': '%s'\", node->key, node->value);","\t\tif (node->sprev != NULL)","\t\t\tprintf(\", \");","\t\tnode = node->sprev;","\t}","\tprintf(\"}\\n\");","}","","/**"," * shash_table_delete - Delete the sorted hash table"," * @ht: The hash table"," */","void shash_table_delete(shash_table_t *ht)","{","\tshash_node_t *node, *temp;","\tunsigned long int i;","","\tif (ht == NULL)","\t\treturn;","","\tfor (i = 0; i < ht->size; i++)","\t{","\t\tnode = ht->array[i];","\t\twhile (node != NULL)","\t\t{","\t\t\ttemp = node;","\t\t\tnode = node->next;","\t\t\tfree(temp->key);","\t\t\tfree(temp->value);","\t\t\tfree(temp);","\t\t}","\t}","","\tfree(ht->array);","\tfree(ht);","}"],"stylingDirectives":[[{"start":0,"end":8,"cssClass":"pl-k"},{"start":9,"end":24,"cssClass":"pl-s"}],[{"start":0,"end":8,"cssClass":"pl-k"},{"start":9,"end":19,"cssClass":"pl-s"}],[],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":50,"cssClass":"pl-c"}],[{"start":0,"end":36,"cssClass":"pl-c"}],[{"start":0,"end":2,"cssClass":"pl-c"}],[{"start":0,"end":66,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":13,"cssClass":"pl-smi"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":15,"end":33,"cssClass":"pl-en"},{"start":34,"end":51,"cssClass":"pl-smi"},{"start":48,"end":51,"cssClass":"pl-smi"},{"start":52,"end":56,"cssClass":"pl-s1"}],[],[{"start":1,"end":14,"cssClass":"pl-smi"},{"start":15,"end":16,"cssClass":"pl-c1"},{"start":16,"end":18,"cssClass":"pl-s1"}],[{"start":1,"end":18,"cssClass":"pl-smi"},{"start":15,"end":18,"cssClass":"pl-smi"},{"start":19,"end":20,"cssClass":"pl-s1"}],[],[{"start":1,"end":3,"cssClass":"pl-s1"},{"start":4,"end":5,"cssClass":"pl-c1"},{"start":6,"end":12,"cssClass":"pl-en"},{"start":13,"end":19,"cssClass":"pl-k"},{"start":20,"end":33,"cssClass":"pl-s1"}],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":7,"cssClass":"pl-s1"},{"start":8,"end":10,"cssClass":"pl-c1"},{"start":11,"end":15,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":14,"cssClass":"pl-c1"}],[],[{"start":1,"end":3,"cssClass":"pl-s1"},{"start":3,"end":5,"cssClass":"pl-c1"},{"start":5,"end":9,"cssClass":"pl-c1"},{"start":10,"end":11,"cssClass":"pl-c1"},{"start":12,"end":16,"cssClass":"pl-s1"}],[{"start":1,"end":3,"cssClass":"pl-s1"},{"start":3,"end":5,"cssClass":"pl-c1"},{"start":5,"end":10,"cssClass":"pl-c1"},{"start":11,"end":12,"cssClass":"pl-c1"},{"start":13,"end":19,"cssClass":"pl-en"},{"start":20,"end":26,"cssClass":"pl-k"},{"start":27,"end":39,"cssClass":"pl-smi"},{"start":40,"end":41,"cssClass":"pl-c1"},{"start":43,"end":44,"cssClass":"pl-c1"},{"start":45,"end":49,"cssClass":"pl-s1"}],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":7,"cssClass":"pl-s1"},{"start":7,"end":9,"cssClass":"pl-c1"},{"start":9,"end":14,"cssClass":"pl-c1"},{"start":15,"end":17,"cssClass":"pl-c1"},{"start":18,"end":22,"cssClass":"pl-c1"}],[],[{"start":2,"end":6,"cssClass":"pl-en"},{"start":7,"end":9,"cssClass":"pl-s1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":14,"cssClass":"pl-c1"}],[],[],[{"start":1,"end":4,"cssClass":"pl-k"},{"start":6,"end":7,"cssClass":"pl-s1"},{"start":8,"end":9,"cssClass":"pl-c1"},{"start":10,"end":11,"cssClass":"pl-c1"},{"start":13,"end":14,"cssClass":"pl-s1"},{"start":15,"end":16,"cssClass":"pl-c1"},{"start":17,"end":21,"cssClass":"pl-s1"},{"start":23,"end":24,"cssClass":"pl-s1"},{"start":24,"end":26,"cssClass":"pl-c1"}],[{"start":2,"end":4,"cssClass":"pl-s1"},{"start":4,"end":6,"cssClass":"pl-c1"},{"start":6,"end":11,"cssClass":"pl-c1"},{"start":12,"end":13,"cssClass":"pl-s1"},{"start":15,"end":16,"cssClass":"pl-c1"},{"start":17,"end":21,"cssClass":"pl-c1"}],[],[{"start":1,"end":3,"cssClass":"pl-s1"},{"start":3,"end":5,"cssClass":"pl-c1"},{"start":5,"end":10,"cssClass":"pl-c1"},{"start":11,"end":12,"cssClass":"pl-c1"},{"start":13,"end":17,"cssClass":"pl-c1"}],[{"start":1,"end":3,"cssClass":"pl-s1"},{"start":3,"end":5,"cssClass":"pl-c1"},{"start":5,"end":10,"cssClass":"pl-c1"},{"start":11,"end":12,"cssClass":"pl-c1"},{"start":13,"end":17,"cssClass":"pl-c1"}],[],[{"start":1,"end":7,"cssClass":"pl-k"},{"start":9,"end":11,"cssClass":"pl-s1"}],[],[],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":52,"cssClass":"pl-c"}],[{"start":0,"end":28,"cssClass":"pl-c"}],[{"start":0,"end":32,"cssClass":"pl-c"}],[{"start":0,"end":2,"cssClass":"pl-c"}],[{"start":0,"end":60,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":12,"cssClass":"pl-smi"},{"start":13,"end":14,"cssClass":"pl-c1"},{"start":14,"end":25,"cssClass":"pl-en"},{"start":26,"end":31,"cssClass":"pl-k"},{"start":32,"end":36,"cssClass":"pl-smi"},{"start":37,"end":38,"cssClass":"pl-c1"},{"start":38,"end":41,"cssClass":"pl-s1"},{"start":43,"end":48,"cssClass":"pl-k"},{"start":49,"end":53,"cssClass":"pl-smi"},{"start":54,"end":55,"cssClass":"pl-c1"},{"start":55,"end":60,"cssClass":"pl-s1"}],[],[{"start":1,"end":13,"cssClass":"pl-smi"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-s1"}],[],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":6,"end":7,"cssClass":"pl-c1"},{"start":8,"end":14,"cssClass":"pl-en"},{"start":15,"end":21,"cssClass":"pl-k"},{"start":22,"end":34,"cssClass":"pl-s1"}],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":9,"cssClass":"pl-s1"},{"start":10,"end":12,"cssClass":"pl-c1"},{"start":13,"end":17,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":14,"cssClass":"pl-c1"}],[],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":5,"end":7,"cssClass":"pl-c1"},{"start":7,"end":10,"cssClass":"pl-c1"},{"start":11,"end":12,"cssClass":"pl-c1"},{"start":13,"end":19,"cssClass":"pl-en"},{"start":20,"end":23,"cssClass":"pl-s1"}],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":9,"cssClass":"pl-s1"},{"start":9,"end":11,"cssClass":"pl-c1"},{"start":11,"end":14,"cssClass":"pl-c1"},{"start":15,"end":17,"cssClass":"pl-c1"},{"start":18,"end":22,"cssClass":"pl-c1"}],[],[{"start":2,"end":6,"cssClass":"pl-en"},{"start":7,"end":11,"cssClass":"pl-s1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":14,"cssClass":"pl-c1"}],[],[],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":5,"end":7,"cssClass":"pl-c1"},{"start":7,"end":12,"cssClass":"pl-c1"},{"start":13,"end":14,"cssClass":"pl-c1"},{"start":15,"end":21,"cssClass":"pl-en"},{"start":22,"end":27,"cssClass":"pl-s1"}],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":9,"cssClass":"pl-s1"},{"start":9,"end":11,"cssClass":"pl-c1"},{"start":11,"end":16,"cssClass":"pl-c1"},{"start":17,"end":19,"cssClass":"pl-c1"},{"start":20,"end":24,"cssClass":"pl-c1"}],[],[{"start":2,"end":6,"cssClass":"pl-en"},{"start":7,"end":11,"cssClass":"pl-s1"},{"start":11,"end":13,"cssClass":"pl-c1"},{"start":13,"end":16,"cssClass":"pl-c1"}],[{"start":2,"end":6,"cssClass":"pl-en"},{"start":7,"end":11,"cssClass":"pl-s1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":14,"cssClass":"pl-c1"}],[],[],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":5,"end":7,"cssClass":"pl-c1"},{"start":7,"end":11,"cssClass":"pl-c1"},{"start":12,"end":13,"cssClass":"pl-c1"},{"start":14,"end":18,"cssClass":"pl-c1"}],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":5,"end":7,"cssClass":"pl-c1"},{"start":7,"end":12,"cssClass":"pl-c1"},{"start":13,"end":14,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-c1"}],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":5,"end":7,"cssClass":"pl-c1"},{"start":7,"end":12,"cssClass":"pl-c1"},{"start":13,"end":14,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-c1"}],[],[{"start":1,"end":7,"cssClass":"pl-k"},{"start":9,"end":13,"cssClass":"pl-c1"}],[],[],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":73,"cssClass":"pl-c"}],[{"start":0,"end":2,"cssClass":"pl-c"}],[{"start":0,"end":36,"cssClass":"pl-c"}],[{"start":0,"end":25,"cssClass":"pl-c"}],[{"start":0,"end":25,"cssClass":"pl-c"}],[{"start":0,"end":23,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":12,"cssClass":"pl-smi"},{"start":13,"end":14,"cssClass":"pl-c1"},{"start":14,"end":25,"cssClass":"pl-en"},{"start":26,"end":38,"cssClass":"pl-smi"},{"start":39,"end":40,"cssClass":"pl-c1"},{"start":40,"end":41,"cssClass":"pl-c1"},{"start":41,"end":42,"cssClass":"pl-s1"},{"start":44,"end":49,"cssClass":"pl-k"},{"start":50,"end":54,"cssClass":"pl-smi"},{"start":55,"end":56,"cssClass":"pl-c1"},{"start":56,"end":59,"cssClass":"pl-s1"},{"start":61,"end":66,"cssClass":"pl-k"},{"start":67,"end":71,"cssClass":"pl-smi"},{"start":72,"end":73,"cssClass":"pl-c1"},{"start":73,"end":78,"cssClass":"pl-s1"}],[],[{"start":1,"end":13,"cssClass":"pl-smi"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":15,"end":18,"cssClass":"pl-s1"}],[],[{"start":1,"end":4,"cssClass":"pl-s1"},{"start":5,"end":6,"cssClass":"pl-c1"},{"start":7,"end":8,"cssClass":"pl-c1"},{"start":8,"end":9,"cssClass":"pl-s1"}],[],[{"start":1,"end":6,"cssClass":"pl-k"},{"start":8,"end":11,"cssClass":"pl-s1"},{"start":12,"end":14,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-c1"}],[],[{"start":2,"end":4,"cssClass":"pl-k"},{"start":6,"end":12,"cssClass":"pl-en"},{"start":13,"end":16,"cssClass":"pl-s1"},{"start":18,"end":21,"cssClass":"pl-s1"},{"start":21,"end":23,"cssClass":"pl-c1"},{"start":23,"end":26,"cssClass":"pl-c1"},{"start":28,"end":30,"cssClass":"pl-c1"},{"start":31,"end":32,"cssClass":"pl-c1"}],[],[{"start":3,"end":7,"cssClass":"pl-en"},{"start":8,"end":11,"cssClass":"pl-s1"},{"start":11,"end":13,"cssClass":"pl-c1"},{"start":13,"end":18,"cssClass":"pl-c1"}],[{"start":3,"end":6,"cssClass":"pl-s1"},{"start":6,"end":8,"cssClass":"pl-c1"},{"start":8,"end":13,"cssClass":"pl-c1"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":16,"end":22,"cssClass":"pl-en"},{"start":23,"end":28,"cssClass":"pl-s1"}],[{"start":3,"end":9,"cssClass":"pl-k"},{"start":11,"end":14,"cssClass":"pl-s1"}],[],[{"start":2,"end":5,"cssClass":"pl-s1"},{"start":6,"end":7,"cssClass":"pl-c1"},{"start":8,"end":11,"cssClass":"pl-s1"},{"start":11,"end":13,"cssClass":"pl-c1"},{"start":13,"end":17,"cssClass":"pl-c1"}],[],[],[{"start":1,"end":4,"cssClass":"pl-s1"},{"start":5,"end":6,"cssClass":"pl-c1"},{"start":7,"end":13,"cssClass":"pl-en"},{"start":14,"end":20,"cssClass":"pl-k"},{"start":21,"end":33,"cssClass":"pl-s1"}],[],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":8,"cssClass":"pl-s1"},{"start":9,"end":11,"cssClass":"pl-c1"},{"start":12,"end":16,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":14,"cssClass":"pl-c1"}],[],[{"start":1,"end":4,"cssClass":"pl-s1"},{"start":4,"end":6,"cssClass":"pl-c1"},{"start":6,"end":9,"cssClass":"pl-c1"},{"start":10,"end":11,"cssClass":"pl-c1"},{"start":12,"end":18,"cssClass":"pl-en"},{"start":19,"end":22,"cssClass":"pl-s1"}],[{"start":1,"end":4,"cssClass":"pl-s1"},{"start":4,"end":6,"cssClass":"pl-c1"},{"start":6,"end":11,"cssClass":"pl-c1"},{"start":12,"end":13,"cssClass":"pl-c1"},{"start":14,"end":20,"cssClass":"pl-en"},{"start":21,"end":26,"cssClass":"pl-s1"}],[{"start":1,"end":4,"cssClass":"pl-s1"},{"start":4,"end":6,"cssClass":"pl-c1"},{"start":6,"end":10,"cssClass":"pl-c1"},{"start":11,"end":12,"cssClass":"pl-c1"},{"start":13,"end":14,"cssClass":"pl-c1"},{"start":14,"end":15,"cssClass":"pl-s1"}],[],[{"start":1,"end":2,"cssClass":"pl-c1"},{"start":2,"end":3,"cssClass":"pl-s1"},{"start":4,"end":5,"cssClass":"pl-c1"},{"start":6,"end":9,"cssClass":"pl-s1"}],[],[{"start":1,"end":7,"cssClass":"pl-k"},{"start":9,"end":12,"cssClass":"pl-s1"}],[],[],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":58,"cssClass":"pl-c"}],[{"start":0,"end":2,"cssClass":"pl-c"}],[{"start":0,"end":28,"cssClass":"pl-c"}],[{"start":0,"end":24,"cssClass":"pl-c"}],[{"start":0,"end":20,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":4,"cssClass":"pl-smi"},{"start":5,"end":16,"cssClass":"pl-en"},{"start":17,"end":30,"cssClass":"pl-smi"},{"start":31,"end":32,"cssClass":"pl-c1"},{"start":32,"end":34,"cssClass":"pl-s1"},{"start":36,"end":48,"cssClass":"pl-smi"},{"start":49,"end":50,"cssClass":"pl-c1"},{"start":50,"end":53,"cssClass":"pl-s1"}],[],[{"start":1,"end":13,"cssClass":"pl-smi"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-s1"},{"start":21,"end":22,"cssClass":"pl-c1"},{"start":22,"end":26,"cssClass":"pl-s1"}],[{"start":1,"end":4,"cssClass":"pl-smi"},{"start":5,"end":8,"cssClass":"pl-s1"}],[],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":6,"end":7,"cssClass":"pl-c1"},{"start":8,"end":12,"cssClass":"pl-s1"},{"start":13,"end":14,"cssClass":"pl-c1"},{"start":15,"end":17,"cssClass":"pl-s1"},{"start":17,"end":19,"cssClass":"pl-c1"},{"start":19,"end":24,"cssClass":"pl-c1"}],[],[{"start":1,"end":6,"cssClass":"pl-k"},{"start":8,"end":12,"cssClass":"pl-s1"},{"start":13,"end":15,"cssClass":"pl-c1"},{"start":16,"end":20,"cssClass":"pl-c1"}],[],[{"start":2,"end":5,"cssClass":"pl-s1"},{"start":6,"end":7,"cssClass":"pl-c1"},{"start":8,"end":14,"cssClass":"pl-en"},{"start":15,"end":18,"cssClass":"pl-s1"},{"start":18,"end":20,"cssClass":"pl-c1"},{"start":20,"end":23,"cssClass":"pl-c1"},{"start":25,"end":29,"cssClass":"pl-s1"},{"start":29,"end":31,"cssClass":"pl-c1"},{"start":31,"end":34,"cssClass":"pl-c1"}],[{"start":2,"end":4,"cssClass":"pl-k"},{"start":6,"end":9,"cssClass":"pl-s1"},{"start":10,"end":12,"cssClass":"pl-c1"},{"start":13,"end":14,"cssClass":"pl-c1"}],[],[{"start":3,"end":9,"cssClass":"pl-k"}],[],[{"start":2,"end":6,"cssClass":"pl-k"},{"start":7,"end":9,"cssClass":"pl-k"},{"start":11,"end":14,"cssClass":"pl-s1"},{"start":15,"end":16,"cssClass":"pl-c1"},{"start":17,"end":18,"cssClass":"pl-c1"}],[],[{"start":3,"end":6,"cssClass":"pl-s1"},{"start":6,"end":8,"cssClass":"pl-c1"},{"start":8,"end":13,"cssClass":"pl-c1"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":16,"end":20,"cssClass":"pl-s1"},{"start":20,"end":22,"cssClass":"pl-c1"},{"start":22,"end":27,"cssClass":"pl-c1"}],[],[{"start":3,"end":5,"cssClass":"pl-k"},{"start":7,"end":11,"cssClass":"pl-s1"},{"start":11,"end":13,"cssClass":"pl-c1"},{"start":13,"end":18,"cssClass":"pl-c1"}],[{"start":4,"end":8,"cssClass":"pl-s1"},{"start":8,"end":10,"cssClass":"pl-c1"},{"start":10,"end":15,"cssClass":"pl-c1"},{"start":15,"end":17,"cssClass":"pl-c1"},{"start":17,"end":22,"cssClass":"pl-c1"},{"start":23,"end":24,"cssClass":"pl-c1"},{"start":25,"end":28,"cssClass":"pl-s1"}],[{"start":3,"end":7,"cssClass":"pl-k"}],[{"start":4,"end":6,"cssClass":"pl-s1"},{"start":6,"end":8,"cssClass":"pl-c1"},{"start":8,"end":13,"cssClass":"pl-c1"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":16,"end":19,"cssClass":"pl-s1"}],[],[{"start":3,"end":7,"cssClass":"pl-s1"},{"start":7,"end":9,"cssClass":"pl-c1"},{"start":9,"end":14,"cssClass":"pl-c1"},{"start":15,"end":16,"cssClass":"pl-c1"},{"start":17,"end":20,"cssClass":"pl-s1"}],[{"start":3,"end":6,"cssClass":"pl-s1"},{"start":6,"end":8,"cssClass":"pl-c1"},{"start":8,"end":13,"cssClass":"pl-c1"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":16,"end":20,"cssClass":"pl-s1"}],[],[{"start":3,"end":9,"cssClass":"pl-k"}],[],[{"start":2,"end":6,"cssClass":"pl-s1"},{"start":7,"end":8,"cssClass":"pl-c1"},{"start":9,"end":13,"cssClass":"pl-s1"}],[{"start":2,"end":6,"cssClass":"pl-s1"},{"start":7,"end":8,"cssClass":"pl-c1"},{"start":9,"end":13,"cssClass":"pl-s1"},{"start":13,"end":15,"cssClass":"pl-c1"},{"start":15,"end":20,"cssClass":"pl-c1"}],[],[],[{"start":1,"end":4,"cssClass":"pl-s1"},{"start":4,"end":6,"cssClass":"pl-c1"},{"start":6,"end":11,"cssClass":"pl-c1"},{"start":12,"end":13,"cssClass":"pl-c1"},{"start":14,"end":18,"cssClass":"pl-s1"}],[{"start":1,"end":4,"cssClass":"pl-s1"},{"start":4,"end":6,"cssClass":"pl-c1"},{"start":6,"end":11,"cssClass":"pl-c1"},{"start":12,"end":13,"cssClass":"pl-c1"},{"start":14,"end":18,"cssClass":"pl-c1"}],[],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":7,"cssClass":"pl-s1"},{"start":7,"end":9,"cssClass":"pl-c1"},{"start":9,"end":14,"cssClass":"pl-c1"}],[{"start":2,"end":6,"cssClass":"pl-s1"},{"start":6,"end":8,"cssClass":"pl-c1"},{"start":8,"end":13,"cssClass":"pl-c1"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":16,"end":19,"cssClass":"pl-s1"}],[{"start":1,"end":5,"cssClass":"pl-k"}],[{"start":2,"end":4,"cssClass":"pl-s1"},{"start":4,"end":6,"cssClass":"pl-c1"},{"start":6,"end":11,"cssClass":"pl-c1"},{"start":12,"end":13,"cssClass":"pl-c1"},{"start":14,"end":17,"cssClass":"pl-s1"}],[],[{"start":1,"end":3,"cssClass":"pl-s1"},{"start":3,"end":5,"cssClass":"pl-c1"},{"start":5,"end":10,"cssClass":"pl-c1"},{"start":11,"end":12,"cssClass":"pl-c1"},{"start":13,"end":16,"cssClass":"pl-s1"}],[],[],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":68,"cssClass":"pl-c"}],[{"start":0,"end":2,"cssClass":"pl-c"}],[{"start":0,"end":34,"cssClass":"pl-c"}],[{"start":0,"end":25,"cssClass":"pl-c"}],[{"start":0,"end":25,"cssClass":"pl-c"}],[{"start":0,"end":37,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-smi"},{"start":4,"end":19,"cssClass":"pl-en"},{"start":20,"end":33,"cssClass":"pl-smi"},{"start":34,"end":35,"cssClass":"pl-c1"},{"start":35,"end":37,"cssClass":"pl-s1"},{"start":39,"end":44,"cssClass":"pl-k"},{"start":45,"end":49,"cssClass":"pl-smi"},{"start":50,"end":51,"cssClass":"pl-c1"},{"start":51,"end":54,"cssClass":"pl-s1"},{"start":56,"end":61,"cssClass":"pl-k"},{"start":62,"end":66,"cssClass":"pl-smi"},{"start":67,"end":68,"cssClass":"pl-c1"},{"start":68,"end":73,"cssClass":"pl-s1"}],[],[{"start":1,"end":18,"cssClass":"pl-smi"},{"start":15,"end":18,"cssClass":"pl-smi"},{"start":19,"end":26,"cssClass":"pl-s1"}],[{"start":1,"end":13,"cssClass":"pl-smi"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":15,"end":18,"cssClass":"pl-s1"}],[],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":7,"cssClass":"pl-s1"},{"start":8,"end":10,"cssClass":"pl-c1"},{"start":11,"end":15,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":11,"cssClass":"pl-c1"}],[],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":8,"cssClass":"pl-s1"},{"start":9,"end":11,"cssClass":"pl-c1"},{"start":12,"end":16,"cssClass":"pl-c1"},{"start":17,"end":19,"cssClass":"pl-c1"},{"start":20,"end":21,"cssClass":"pl-c1"},{"start":21,"end":24,"cssClass":"pl-s1"},{"start":25,"end":27,"cssClass":"pl-c1"},{"start":28,"end":32,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":11,"cssClass":"pl-c1"}],[],[{"start":1,"end":8,"cssClass":"pl-s1"},{"start":9,"end":10,"cssClass":"pl-c1"},{"start":11,"end":20,"cssClass":"pl-en"},{"start":22,"end":35,"cssClass":"pl-smi"},{"start":31,"end":35,"cssClass":"pl-smi"},{"start":36,"end":37,"cssClass":"pl-c1"},{"start":38,"end":41,"cssClass":"pl-s1"},{"start":43,"end":45,"cssClass":"pl-s1"},{"start":45,"end":47,"cssClass":"pl-c1"},{"start":47,"end":51,"cssClass":"pl-c1"}],[],[{"start":1,"end":4,"cssClass":"pl-s1"},{"start":5,"end":6,"cssClass":"pl-c1"},{"start":7,"end":18,"cssClass":"pl-en"},{"start":19,"end":20,"cssClass":"pl-c1"},{"start":21,"end":23,"cssClass":"pl-s1"},{"start":23,"end":25,"cssClass":"pl-c1"},{"start":25,"end":30,"cssClass":"pl-c1"},{"start":31,"end":38,"cssClass":"pl-s1"},{"start":42,"end":45,"cssClass":"pl-s1"},{"start":47,"end":52,"cssClass":"pl-s1"}],[],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":8,"cssClass":"pl-s1"},{"start":9,"end":11,"cssClass":"pl-c1"},{"start":12,"end":16,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":11,"cssClass":"pl-c1"}],[],[{"start":1,"end":12,"cssClass":"pl-en"},{"start":13,"end":15,"cssClass":"pl-s1"},{"start":17,"end":20,"cssClass":"pl-s1"}],[],[{"start":1,"end":7,"cssClass":"pl-k"},{"start":9,"end":10,"cssClass":"pl-c1"}],[],[],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":61,"cssClass":"pl-c"}],[{"start":0,"end":22,"cssClass":"pl-c"}],[{"start":0,"end":26,"cssClass":"pl-c"}],[{"start":0,"end":2,"cssClass":"pl-c"}],[{"start":0,"end":70,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":4,"cssClass":"pl-smi"},{"start":5,"end":6,"cssClass":"pl-c1"},{"start":6,"end":21,"cssClass":"pl-en"},{"start":22,"end":27,"cssClass":"pl-k"},{"start":28,"end":41,"cssClass":"pl-smi"},{"start":42,"end":43,"cssClass":"pl-c1"},{"start":43,"end":45,"cssClass":"pl-s1"},{"start":47,"end":52,"cssClass":"pl-k"},{"start":53,"end":57,"cssClass":"pl-smi"},{"start":58,"end":59,"cssClass":"pl-c1"},{"start":59,"end":62,"cssClass":"pl-s1"}],[],[{"start":1,"end":13,"cssClass":"pl-smi"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-s1"}],[{"start":1,"end":18,"cssClass":"pl-smi"},{"start":15,"end":18,"cssClass":"pl-smi"},{"start":19,"end":24,"cssClass":"pl-s1"}],[],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":7,"cssClass":"pl-s1"},{"start":8,"end":10,"cssClass":"pl-c1"},{"start":11,"end":15,"cssClass":"pl-c1"},{"start":16,"end":18,"cssClass":"pl-c1"},{"start":19,"end":22,"cssClass":"pl-s1"},{"start":23,"end":25,"cssClass":"pl-c1"},{"start":26,"end":30,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"},{"start":10,"end":14,"cssClass":"pl-c1"}],[],[{"start":1,"end":6,"cssClass":"pl-s1"},{"start":7,"end":8,"cssClass":"pl-c1"},{"start":9,"end":18,"cssClass":"pl-en"},{"start":20,"end":25,"cssClass":"pl-k"},{"start":26,"end":39,"cssClass":"pl-smi"},{"start":35,"end":39,"cssClass":"pl-smi"},{"start":40,"end":41,"cssClass":"pl-c1"},{"start":42,"end":45,"cssClass":"pl-s1"},{"start":47,"end":49,"cssClass":"pl-s1"},{"start":49,"end":51,"cssClass":"pl-c1"},{"start":51,"end":55,"cssClass":"pl-c1"}],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":6,"end":7,"cssClass":"pl-c1"},{"start":8,"end":10,"cssClass":"pl-s1"},{"start":10,"end":12,"cssClass":"pl-c1"},{"start":12,"end":17,"cssClass":"pl-c1"},{"start":18,"end":23,"cssClass":"pl-s1"}],[],[{"start":1,"end":6,"cssClass":"pl-k"},{"start":8,"end":12,"cssClass":"pl-s1"},{"start":13,"end":15,"cssClass":"pl-c1"},{"start":16,"end":20,"cssClass":"pl-c1"},{"start":21,"end":23,"cssClass":"pl-c1"},{"start":24,"end":30,"cssClass":"pl-en"},{"start":31,"end":35,"cssClass":"pl-s1"},{"start":35,"end":37,"cssClass":"pl-c1"},{"start":37,"end":40,"cssClass":"pl-c1"},{"start":42,"end":45,"cssClass":"pl-s1"},{"start":47,"end":49,"cssClass":"pl-c1"},{"start":50,"end":51,"cssClass":"pl-c1"}],[{"start":2,"end":6,"cssClass":"pl-s1"},{"start":7,"end":8,"cssClass":"pl-c1"},{"start":9,"end":13,"cssClass":"pl-s1"},{"start":13,"end":15,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-c1"}],[],[{"start":1,"end":7,"cssClass":"pl-k"},{"start":10,"end":14,"cssClass":"pl-s1"},{"start":15,"end":17,"cssClass":"pl-c1"},{"start":18,"end":22,"cssClass":"pl-c1"},{"start":26,"end":30,"cssClass":"pl-s1"},{"start":30,"end":32,"cssClass":"pl-c1"},{"start":32,"end":37,"cssClass":"pl-c1"},{"start":40,"end":44,"cssClass":"pl-c1"}],[],[],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":50,"cssClass":"pl-c"}],[{"start":0,"end":22,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":4,"cssClass":"pl-smi"},{"start":5,"end":22,"cssClass":"pl-en"},{"start":23,"end":28,"cssClass":"pl-k"},{"start":29,"end":42,"cssClass":"pl-smi"},{"start":43,"end":44,"cssClass":"pl-c1"},{"start":44,"end":46,"cssClass":"pl-s1"}],[],[{"start":1,"end":13,"cssClass":"pl-smi"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-s1"}],[],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":7,"cssClass":"pl-s1"},{"start":8,"end":10,"cssClass":"pl-c1"},{"start":11,"end":15,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"}],[],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":6,"end":7,"cssClass":"pl-c1"},{"start":8,"end":10,"cssClass":"pl-s1"},{"start":10,"end":12,"cssClass":"pl-c1"},{"start":12,"end":17,"cssClass":"pl-c1"}],[],[{"start":1,"end":7,"cssClass":"pl-en"},{"start":8,"end":11,"cssClass":"pl-s"}],[{"start":1,"end":6,"cssClass":"pl-k"},{"start":8,"end":12,"cssClass":"pl-s1"},{"start":13,"end":15,"cssClass":"pl-c1"},{"start":16,"end":20,"cssClass":"pl-c1"}],[],[{"start":2,"end":8,"cssClass":"pl-en"},{"start":9,"end":21,"cssClass":"pl-s"},{"start":23,"end":27,"cssClass":"pl-s1"},{"start":27,"end":29,"cssClass":"pl-c1"},{"start":29,"end":32,"cssClass":"pl-c1"},{"start":34,"end":38,"cssClass":"pl-s1"},{"start":38,"end":40,"cssClass":"pl-c1"},{"start":40,"end":45,"cssClass":"pl-c1"}],[{"start":2,"end":4,"cssClass":"pl-k"},{"start":6,"end":10,"cssClass":"pl-s1"},{"start":10,"end":12,"cssClass":"pl-c1"},{"start":12,"end":17,"cssClass":"pl-c1"},{"start":18,"end":20,"cssClass":"pl-c1"},{"start":21,"end":25,"cssClass":"pl-c1"}],[{"start":3,"end":9,"cssClass":"pl-en"},{"start":10,"end":14,"cssClass":"pl-s"}],[{"start":2,"end":6,"cssClass":"pl-s1"},{"start":7,"end":8,"cssClass":"pl-c1"},{"start":9,"end":13,"cssClass":"pl-s1"},{"start":13,"end":15,"cssClass":"pl-c1"},{"start":15,"end":20,"cssClass":"pl-c1"}],[],[{"start":1,"end":7,"cssClass":"pl-en"},{"start":8,"end":13,"cssClass":"pl-s"}],[],[],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":71,"cssClass":"pl-c"}],[{"start":0,"end":22,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":4,"cssClass":"pl-smi"},{"start":5,"end":26,"cssClass":"pl-en"},{"start":27,"end":32,"cssClass":"pl-k"},{"start":33,"end":46,"cssClass":"pl-smi"},{"start":47,"end":48,"cssClass":"pl-c1"},{"start":48,"end":50,"cssClass":"pl-s1"}],[],[{"start":1,"end":13,"cssClass":"pl-smi"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-s1"}],[],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":7,"cssClass":"pl-s1"},{"start":8,"end":10,"cssClass":"pl-c1"},{"start":11,"end":15,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"}],[],[{"start":1,"end":5,"cssClass":"pl-s1"},{"start":6,"end":7,"cssClass":"pl-c1"},{"start":8,"end":10,"cssClass":"pl-s1"},{"start":10,"end":12,"cssClass":"pl-c1"},{"start":12,"end":17,"cssClass":"pl-c1"}],[],[{"start":1,"end":7,"cssClass":"pl-en"},{"start":8,"end":11,"cssClass":"pl-s"}],[{"start":1,"end":6,"cssClass":"pl-k"},{"start":8,"end":12,"cssClass":"pl-s1"},{"start":13,"end":15,"cssClass":"pl-c1"},{"start":16,"end":20,"cssClass":"pl-c1"}],[],[{"start":2,"end":8,"cssClass":"pl-en"},{"start":9,"end":21,"cssClass":"pl-s"},{"start":23,"end":27,"cssClass":"pl-s1"},{"start":27,"end":29,"cssClass":"pl-c1"},{"start":29,"end":32,"cssClass":"pl-c1"},{"start":34,"end":38,"cssClass":"pl-s1"},{"start":38,"end":40,"cssClass":"pl-c1"},{"start":40,"end":45,"cssClass":"pl-c1"}],[{"start":2,"end":4,"cssClass":"pl-k"},{"start":6,"end":10,"cssClass":"pl-s1"},{"start":10,"end":12,"cssClass":"pl-c1"},{"start":12,"end":17,"cssClass":"pl-c1"},{"start":18,"end":20,"cssClass":"pl-c1"},{"start":21,"end":25,"cssClass":"pl-c1"}],[{"start":3,"end":9,"cssClass":"pl-en"},{"start":10,"end":14,"cssClass":"pl-s"}],[{"start":2,"end":6,"cssClass":"pl-s1"},{"start":7,"end":8,"cssClass":"pl-c1"},{"start":9,"end":13,"cssClass":"pl-s1"},{"start":13,"end":15,"cssClass":"pl-c1"},{"start":15,"end":20,"cssClass":"pl-c1"}],[],[{"start":1,"end":7,"cssClass":"pl-en"},{"start":8,"end":13,"cssClass":"pl-s"}],[],[],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":52,"cssClass":"pl-c"}],[{"start":0,"end":22,"cssClass":"pl-c"}],[{"start":0,"end":3,"cssClass":"pl-c"}],[{"start":0,"end":4,"cssClass":"pl-smi"},{"start":5,"end":23,"cssClass":"pl-en"},{"start":24,"end":37,"cssClass":"pl-smi"},{"start":38,"end":39,"cssClass":"pl-c1"},{"start":39,"end":41,"cssClass":"pl-s1"}],[],[{"start":1,"end":13,"cssClass":"pl-smi"},{"start":14,"end":15,"cssClass":"pl-c1"},{"start":15,"end":19,"cssClass":"pl-s1"},{"start":21,"end":22,"cssClass":"pl-c1"},{"start":22,"end":26,"cssClass":"pl-s1"}],[{"start":1,"end":18,"cssClass":"pl-smi"},{"start":15,"end":18,"cssClass":"pl-smi"},{"start":19,"end":20,"cssClass":"pl-s1"}],[],[{"start":1,"end":3,"cssClass":"pl-k"},{"start":5,"end":7,"cssClass":"pl-s1"},{"start":8,"end":10,"cssClass":"pl-c1"},{"start":11,"end":15,"cssClass":"pl-c1"}],[{"start":2,"end":8,"cssClass":"pl-k"}],[],[{"start":1,"end":4,"cssClass":"pl-k"},{"start":6,"end":7,"cssClass":"pl-s1"},{"start":8,"end":9,"cssClass":"pl-c1"},{"start":10,"end":11,"cssClass":"pl-c1"},{"start":13,"end":14,"cssClass":"pl-s1"},{"start":15,"end":16,"cssClass":"pl-c1"},{"start":17,"end":19,"cssClass":"pl-s1"},{"start":19,"end":21,"cssClass":"pl-c1"},{"start":21,"end":25,"cssClass":"pl-c1"},{"start":27,"end":28,"cssClass":"pl-s1"},{"start":28,"end":30,"cssClass":"pl-c1"}],[],[{"start":2,"end":6,"cssClass":"pl-s1"},{"start":7,"end":8,"cssClass":"pl-c1"},{"start":9,"end":11,"cssClass":"pl-s1"},{"start":11,"end":13,"cssClass":"pl-c1"},{"start":13,"end":18,"cssClass":"pl-c1"},{"start":19,"end":20,"cssClass":"pl-s1"}],[{"start":2,"end":7,"cssClass":"pl-k"},{"start":9,"end":13,"cssClass":"pl-s1"},{"start":14,"end":16,"cssClass":"pl-c1"},{"start":17,"end":21,"cssClass":"pl-c1"}],[],[{"start":3,"end":7,"cssClass":"pl-s1"},{"start":8,"end":9,"cssClass":"pl-c1"},{"start":10,"end":14,"cssClass":"pl-s1"}],[{"start":3,"end":7,"cssClass":"pl-s1"},{"start":8,"end":9,"cssClass":"pl-c1"},{"start":10,"end":14,"cssClass":"pl-s1"},{"start":14,"end":16,"cssClass":"pl-c1"},{"start":16,"end":20,"cssClass":"pl-c1"}],[{"start":3,"end":7,"cssClass":"pl-en"},{"start":8,"end":12,"cssClass":"pl-s1"},{"start":12,"end":14,"cssClass":"pl-c1"},{"start":14,"end":17,"cssClass":"pl-c1"}],[{"start":3,"end":7,"cssClass":"pl-en"},{"start":8,"end":12,"cssClass":"pl-s1"},{"start":12,"end":14,"cssClass":"pl-c1"},{"start":14,"end":19,"cssClass":"pl-c1"}],[{"start":3,"end":7,"cssClass":"pl-en"},{"start":8,"end":12,"cssClass":"pl-s1"}],[],[],[],[{"start":1,"end":5,"cssClass":"pl-en"},{"start":6,"end":8,"cssClass":"pl-s1"},{"start":8,"end":10,"cssClass":"pl-c1"},{"start":10,"end":15,"cssClass":"pl-c1"}],[{"start":1,"end":5,"cssClass":"pl-en"},{"start":6,"end":8,"cssClass":"pl-s1"}],[]],"csv":null,"csvError":null,"dependabotInfo":{"showConfigurationBanner":false,"configFilePath":null,"networkDependabotPath":"/hamzahdili2001/alx-low_level_programming/network/updates","dismissConfigurationNoticePath":"/settings/dismiss-notice/dependabot_configuration_notice","configurationNoticeDismissed":null,"repoAlertsPath":"/hamzahdili2001/alx-low_level_programming/security/dependabot","repoSecurityAndAnalysisPath":"/hamzahdili2001/alx-low_level_programming/settings/security_analysis","repoOwnerIsOrg":false,"currentUserCanAdminRepo":false},"displayName":"100-sorted_hash_table.c","displayUrl":"https://github.com/hamzahdili2001/alx-low_level_programming/blob/main/0x1A-hash_tables/100-sorted_hash_table.c?raw=true","headerInfo":{"blobSize":"4.88 KB","deleteInfo":{"deleteTooltip":"You must be signed in to make or propose changes"},"editInfo":{"editTooltip":"You must be signed in to make or propose changes"},"ghDesktopPath":"https://desktop.github.com","gitLfsPath":null,"onBranch":true,"shortPath":"e947522","siteNavLoginPath":"/login?return_to=https%3A%2F%2Fgithub.com%2Fhamzahdili2001%2Falx-low_level_programming%2Fblob%2Fmain%2F0x1A-hash_tables%2F100-sorted_hash_table.c","isCSV":false,"isRichtext":false,"toc":null,"lineInfo":{"truncatedLoc":"292","truncatedSloc":"238"},"mode":"file"},"image":false,"isCodeownersFile":null,"isPlain":false,"isValidLegacyIssueTemplate":false,"issueTemplateHelpUrl":"https://docs.github.com/articles/about-issue-and-pull-request-templates","issueTemplate":null,"discussionTemplate":null,"language":"C","languageID":41,"large":false,"loggedIn":false,"newDiscussionPath":"/hamzahdili2001/alx-low_level_programming/discussions/new","newIssuePath":"/hamzahdili2001/alx-low_level_programming/issues/new","planSupportInfo":{"repoIsFork":null,"repoOwnedByCurrentUser":null,"requestFullPath":"/hamzahdili2001/alx-low_level_programming/blob/main/0x1A-hash_tables/100-sorted_hash_table.c","showFreeOrgGatedFeatureMessage":null,"showPlanSupportBanner":null,"upgradeDataAttributes":null,"upgradePath":null},"publishBannersInfo":{"dismissActionNoticePath":"/settings/dismiss-notice/publish_action_from_dockerfile","dismissStackNoticePath":"/settings/dismiss-notice/publish_stack_from_file","releasePath":"/hamzahdili2001/alx-low_level_programming/releases/new?marketplace=true","showPublishActionBanner":false,"showPublishStackBanner":false},"rawBlobUrl":"https://github.com/hamzahdili2001/alx-low_level_programming/raw/main/0x1A-hash_tables/100-sorted_hash_table.c","renderImageOrRaw":false,"richText":null,"renderedFileInfo":null,"shortPath":null,"tabSize":8,"topBannersInfo":{"overridingGlobalFundingFile":false,"globalPreferredFundingPath":null,"repoOwner":"hamzahdili2001","repoName":"alx-low_level_programming","showInvalidCitationWarning":false,"citationHelpUrl":"https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/about-citation-files","showDependabotConfigurationBanner":false,"actionsOnboardingTip":null},"truncated":false,"viewable":true,"workflowRedirectUrl":null,"symbols":{"timedOut":false,"notAnalyzed":false,"symbols":[{"name":"shash_table_create","kind":"function","identStart":227,"identEnd":245,"extentStart":227,"extentEnd":269,"fullyQualifiedName":"shash_table_create","identUtf16":{"start":{"lineNumber":9,"utf16Col":15},"end":{"lineNumber":9,"utf16Col":33}},"extentUtf16":{"start":{"lineNumber":9,"utf16Col":15},"end":{"lineNumber":9,"utf16Col":57}}},{"name":"create_node","kind":"function","identStart":826,"identEnd":837,"extentStart":826,"extentEnd":873,"fullyQualifiedName":"create_node","identUtf16":{"start":{"lineNumber":42,"utf16Col":14},"end":{"lineNumber":42,"utf16Col":25}},"extentUtf16":{"start":{"lineNumber":42,"utf16Col":14},"end":{"lineNumber":42,"utf16Col":61}}},{"name":"add_n_shash","kind":"function","identStart":1468,"identEnd":1479,"extentStart":1468,"extentEnd":1533,"fullyQualifiedName":"add_n_shash","identUtf16":{"start":{"lineNumber":80,"utf16Col":14},"end":{"lineNumber":80,"utf16Col":25}},"extentUtf16":{"start":{"lineNumber":80,"utf16Col":14},"end":{"lineNumber":80,"utf16Col":79}}},{"name":"add_i_shash","kind":"function","identStart":2053,"identEnd":2064,"extentStart":2053,"extentEnd":2102,"fullyQualifiedName":"add_i_shash","identUtf16":{"start":{"lineNumber":118,"utf16Col":5},"end":{"lineNumber":118,"utf16Col":16}},"extentUtf16":{"start":{"lineNumber":118,"utf16Col":5},"end":{"lineNumber":118,"utf16Col":54}}},{"name":"shash_table_set","kind":"function","identStart":2837,"identEnd":2852,"extentStart":2837,"extentEnd":2907,"fullyQualifiedName":"shash_table_set","identUtf16":{"start":{"lineNumber":169,"utf16Col":4},"end":{"lineNumber":169,"utf16Col":19}},"extentUtf16":{"start":{"lineNumber":169,"utf16Col":4},"end":{"lineNumber":169,"utf16Col":74}}},{"name":"shash_table_get","kind":"function","identStart":3424,"identEnd":3439,"extentStart":3424,"extentEnd":3481,"fullyQualifiedName":"shash_table_get","identUtf16":{"start":{"lineNumber":199,"utf16Col":6},"end":{"lineNumber":199,"utf16Col":21}},"extentUtf16":{"start":{"lineNumber":199,"utf16Col":6},"end":{"lineNumber":199,"utf16Col":63}}},{"name":"shash_table_print","kind":"function","identStart":3879,"identEnd":3896,"extentStart":3879,"extentEnd":3921,"fullyQualifiedName":"shash_table_print","identUtf16":{"start":{"lineNumber":220,"utf16Col":5},"end":{"lineNumber":220,"utf16Col":22}},"extentUtf16":{"start":{"lineNumber":220,"utf16Col":5},"end":{"lineNumber":220,"utf16Col":47}}},{"name":"shash_table_print_rev","kind":"function","identStart":4277,"identEnd":4298,"extentStart":4277,"extentEnd":4323,"fullyQualifiedName":"shash_table_print_rev","identUtf16":{"start":{"lineNumber":244,"utf16Col":5},"end":{"lineNumber":244,"utf16Col":26}},"extentUtf16":{"start":{"lineNumber":244,"utf16Col":5},"end":{"lineNumber":244,"utf16Col":51}}},{"name":"shash_table_delete","kind":"function","identStart":4660,"identEnd":4678,"extentStart":4660,"extentEnd":4697,"fullyQualifiedName":"shash_table_delete","identUtf16":{"start":{"lineNumber":268,"utf16Col":5},"end":{"lineNumber":268,"utf16Col":23}},"extentUtf16":{"start":{"lineNumber":268,"utf16Col":5},"end":{"lineNumber":268,"utf16Col":42}}}]}},"copilotInfo":null,"copilotAccessAllowed":false,"csrf_tokens":{"/hamzahdili2001/alx-low_level_programming/branches":{"post":"8cHfXNBtIdnkEuiXRlcY5txUs8HEOzahRZJqtOLrJgtqtvicU54pstWb4RYkbdj3V4kRrzHyD4UAxd-RCM1eXA"},"/repos/preferences":{"post":"zilcV6QzAx3DF3k1MsuxQkBx-arwZtWNO66Xk5yIZOtlr_mK0SOLbCaQY9adzHzq6y_kNqywj5aHOw0Iz_QMsQ"}}},"title":"alx-low_level_programming/0x1A-hash_tables/100-sorted_hash_table.c at main · hamzahdili2001/alx-low_level_programming"}
+#include "hash_tables.h"
+#include <string.h>
+
+/**
+ * shash_table_create - Create a sorted hash table
+ * @size: The size of the hash table
+ *
+ * Return: A pointer to the created hash table, or NULL on failure
+ */
+shash_table_t *shash_table_create(unsigned long int size)
+{
+	shash_table_t *ht;
+	unsigned long int i;
+
+	ht = malloc(sizeof(shash_table_t));
+	if (ht == NULL)
+		return (NULL);
+
+	ht->size = size;
+	ht->array = malloc(sizeof(shash_node_t *) * size);
+	if (ht->array == NULL)
+	{
+		free(ht);
+		return (NULL);
+	}
+
+	for (i = 0; i < size; i++)
+		ht->array[i] = NULL;
+
+	ht->shead = NULL;
+	ht->stail = NULL;
+
+	return (ht);
+}
+
+/**
+ * create_node - Create a new sorted hash table node
+ * @key: The key of the node
+ * @value: The value of the node
+ *
+ * Return: A pointer to the created node, or NULL on failure
+ */
+shash_node_t *create_node(const char *key, const char *value)
+{
+	shash_node_t *node;
+
+	node = malloc(sizeof(shash_node_t));
+	if (node == NULL)
+		return (NULL);
+
+	node->key = strdup(key);
+	if (node->key == NULL)
+	{
+		free(node);
+		return (NULL);
+	}
+
+	node->value = strdup(value);
+	if (node->value == NULL)
+	{
+		free(node->key);
+		free(node);
+		return (NULL);
+	}
+
+	node->next = NULL;
+	node->sprev = NULL;
+	node->snext = NULL;
+
+	return (NULL);
+}
+
+/**
+ * add_n_shash - adds a node at the beginning of a shash at a given index
+ *
+ * @h: head of the shash linked list
+ * @key: key of the shash
+ * @value: value to store
+ * Return: created node
+ */
+shash_node_t *add_n_shash(shash_node_t **h, const char *key, const char *value)
+{
+	shash_node_t *tmp;
+
+	tmp = *h;
+
+	while (tmp != NULL)
+	{
+		if (strcmp(key, tmp->key) == 0)
+		{
+			free(tmp->value);
+			tmp->value = strdup(value);
+			return (tmp);
+		}
+		tmp = tmp->next;
+	}
+
+	tmp = malloc(sizeof(shash_node_t));
+
+	if (tmp == NULL)
+		return (NULL);
+
+	tmp->key = strdup(key);
+	tmp->value = strdup(value);
+	tmp->next = *h;
+
+	*h = tmp;
+
+	return (tmp);
+}
+
+/**
+ * add_i_shash - adds a node on the DLL of the shash table
+ *
+ * @ht: pointer to the table
+ * @new: new node to add
+ * Return: no return
+ */
+void add_i_shash(shash_table_t *ht, shash_node_t *new)
+{
+	shash_node_t *tmp1, *tmp2;
+	int ret;
+
+	tmp1 = tmp2 = ht->shead;
+
+	while (tmp1 != NULL)
+	{
+		ret = strcmp(new->key, tmp1->key);
+		if (ret == 0)
+		{
+			return;
+		}
+		else if (ret < 0)
+		{
+			new->sprev = tmp1->sprev;
+
+			if (tmp1->sprev)
+				tmp1->sprev->snext = new;
+			else
+				ht->shead = new;
+
+			tmp1->sprev = new;
+			new->snext = tmp1;
+
+			return;
+		}
+		tmp2 = tmp1;
+		tmp1 = tmp1->snext;
+	}
+
+	new->sprev = tmp2;
+	new->snext = NULL;
+
+	if (ht->shead)
+		tmp2->snext = new;
+	else
+		ht->shead = new;
+
+	ht->stail = new;
+}
+
+/**
+ * shash_table_set - adds a hash (key, value) to a given shash table
+ *
+ * @ht: pointer to the shash table
+ * @key: key of the shash
+ * @value: value to store
+ * Return: 1 if successes, 0 if fails
+ */
+int shash_table_set(shash_table_t *ht, const char *key, const char *value)
+{
+	unsigned long int k_index;
+	shash_node_t *new;
+
+	if (ht == NULL)
+		return (0);
+
+	if (key == NULL || *key == '\0')
+		return (0);
+
+	k_index = key_index((unsigned char *)key, ht->size);
+
+	new = add_n_shash(&(ht->array[k_index]), key, value);
+
+	if (new == NULL)
+		return (0);
+
+	add_i_shash(ht, new);
+
+	return (1);
+}
+
+/**
+ * shash_table_get - Retrieve the value associated with a key
+ * @ht: The hash table
+ * @key: The key to search
+ *
+ * Return: The value associated with the key, or NULL if key not found
+ */
+char *shash_table_get(const shash_table_t *ht, const char *key)
+{
+	shash_node_t *node;
+	unsigned long int index;
+
+	if (ht == NULL || key == NULL)
+		return (NULL);
+
+	index = key_index((const unsigned char *)key, ht->size);
+	node = ht->array[index];
+
+	while (node != NULL && strcmp(node->key, key) != 0)
+		node = node->next;
+
+	return ((node != NULL) ? node->value : NULL);
+}
+
+/**
+ * shash_table_print - Print the sorted hash table
+ * @ht: The hash table
+ */
+void shash_table_print(const shash_table_t *ht)
+{
+	shash_node_t *node;
+
+	if (ht == NULL)
+		return;
+
+	node = ht->shead;
+
+	printf("{");
+	while (node != NULL)
+	{
+		printf("'%s': '%s'", node->key, node->value);
+		if (node->snext != NULL)
+			printf(", ");
+		node = node->snext;
+	}
+	printf("}\n");
+}
+
+/**
+ * shash_table_print_rev - Print the sorted hash table in reverse order
+ * @ht: The hash table
+ */
+void shash_table_print_rev(const shash_table_t *ht)
+{
+	shash_node_t *node;
+
+	if (ht == NULL)
+		return;
+
+	node = ht->stail;
+
+	printf("{");
+	while (node != NULL)
+	{
+		printf("'%s': '%s'", node->key, node->value);
+		if (node->sprev != NULL)
+			printf(", ");
+		node = node->sprev;
+	}
+	printf("}\n");
+}
+
+/**
+ * shash_table_delete - Delete the sorted hash table
+ * @ht: The hash table
+ */
+void shash_table_delete(shash_table_t *ht)
+{
+	shash_node_t *node, *temp;
+	unsigned long int i;
+
+	if (ht == NULL)
+		return;
+
+	for (i = 0; i < ht->size; i++)
+	{
+		node = ht->array[i];
+		while (node != NULL)
+		{
+			temp = node;
+			node = node->next;
+			free(temp->key);
+			free(temp->value);
+			free(temp);
+		}
+	}
+
+	free(ht->array);
+	free(ht);
+}
